@@ -1,3 +1,5 @@
+productsDisplayLoop()
+
 
 function productsDisplayLoop () {
   let productGridHTML = ''
@@ -48,7 +50,9 @@ function productsDisplayLoop () {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary" 
+          data-product-id="${product.id}"
+          data-product-name="${product.name}">
             Add to Cart
           </button>
         </div>`
@@ -57,7 +61,33 @@ function productsDisplayLoop () {
   })
 
   document.querySelector('.products-grid').innerHTML = productGridHTML
- 
+  
+  document.querySelectorAll('.add-to-cart-button').forEach(cartbttn => {
+    cartbttn.addEventListener('click', () => {
+      let productName = cartbttn.dataset.productName;
+      let productId = cartbttn.dataset.productId;
+      let matchingItem;
+  
+      cart.forEach((product) => {
+        if (productId === product.productId) {
+          matchingItem = product
+        }
+      });
+  
+      if (!matchingItem) {
+        cart.push({
+          productId,
+          productName, 
+          quantity: 1
+        })
+      } else {
+        matchingItem.quantity+=1
+      }
+  
+  
+      console.log(cart)
+  })
+  
+  })
 }
 
-productsDisplayLoop()
