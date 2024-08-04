@@ -29,7 +29,7 @@ function productsDisplayLoop () {
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -66,6 +66,7 @@ function productsDisplayLoop () {
     cartbttn.addEventListener('click', () => {
       let productName = cartbttn.dataset.productName;
       let productId = cartbttn.dataset.productId;
+      let quantity = Number(document.querySelector(`.quantity-selector-${productId}`).value)
       let matchingItem;
   
       cart.forEach((product) => {
@@ -78,10 +79,10 @@ function productsDisplayLoop () {
         cart.push({
           productId,
           productName, 
-          quantity: 1
+          quantity
         })
       } else {
-        matchingItem.quantity+=1
+        matchingItem.quantity+=quantity
       }
   
   
