@@ -86,8 +86,22 @@ function productsDisplayLoop () {
   
   
       console.log(cart)
+
+      let cartQuantity = 0
+      cart.forEach(product => {
+        let cartNum = product.quantity
+        cartQuantity += cartNum
+      })
+
+      console.log(cartQuantity)
+
+
+      document.querySelector('.cart-quantity').innerText = cartQuantity
+
   })
   
   })
 }
+
+
 
