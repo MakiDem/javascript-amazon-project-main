@@ -76,38 +76,9 @@ function productsDisplayLoop () {
       let productId = cartbttn.dataset.productId;
       let quantity = Number(document.querySelector(`.quantity-selector-${productId}`).value)
       let matchingItem;
-  
-      cart.forEach((product) => {
-        if (productId === product.productId) {
-          matchingItem = product
-        }
-      });
-  
-      if (!matchingItem) {
-        cart.push({
-          productId,
-          productName, 
-          quantity
-        })
-      } else {
-        matchingItem.quantity+=quantity
-      }
-  
-  
-      console.log(cart)
 
-      let cartQuantity = 0
-      cart.forEach(product => {
-        let cartNum = product.quantity
-        cartQuantity += cartNum
-      })
-
-      console.log(cartQuantity)
-
-
-      document.querySelector('.cart-quantity').innerText = cartQuantity
-
-      
+      matchInCart(productId, quantity, productName, matchingItem);
+      updateCartQuantity();
 
       document.querySelector(`.added-to-cart-${productId}`)
         .classList.add('added');
@@ -126,6 +97,34 @@ function productsDisplayLoop () {
   })
 }
 
+function matchInCart (productId, quantity, productName, matchingItem) {
+  cart.forEach((product) => {
+    if (productId === product.productId) {
+      matchingItem = product
+    }
+  });
+
+  if (!matchingItem) {
+    cart.push({
+      productId,
+      productName, 
+      quantity
+    })
+  } else {
+    matchingItem.quantity+=quantity
+  }
+
+}
+
+function updateCartQuantity () {
+  let cartQuantity = 0
+      cart.forEach(product => {
+        let cartNum = product.quantity
+        cartQuantity += cartNum
+      })
+  
+  document.querySelector('.cart-quantity').innerText = cartQuantity
+}
 
 
 
