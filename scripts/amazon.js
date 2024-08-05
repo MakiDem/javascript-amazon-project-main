@@ -1,14 +1,14 @@
 import {cart} from '../data/cart.js';
+import {products} from '../data/products.js'
 
 productsDisplayLoop()
 
-
-let timeOutId;
 
 function productsDisplayLoop () {
   let productGridHTML = ''
 
   products.forEach((product) => {
+    
     let productHTML = 
       `<div class="product-container">
           <div class="product-image-container">
@@ -65,9 +65,13 @@ function productsDisplayLoop () {
   })
 
   document.querySelector('.products-grid').innerHTML = productGridHTML
+
+  let timeOutIds = {}
   
   document.querySelectorAll('.add-to-cart-button').forEach(cartbttn => {
+    // function for every cart button
     cartbttn.addEventListener('click', () => {
+      // executes code after cart button is clicked
       let productName = cartbttn.dataset.productName;
       let productId = cartbttn.dataset.productId;
       let quantity = Number(document.querySelector(`.quantity-selector-${productId}`).value)
@@ -108,15 +112,15 @@ function productsDisplayLoop () {
       document.querySelector(`.added-to-cart-${productId}`)
         .classList.add('added');
 
-        if (timeOutId) {
-          clearTimeout(timeOutId)
+        if (timeOutIds.productId) {
+          clearTimeout(timeOutIds.timeOutId)
         }
 
-        timeOutId = setTimeout(() => {
+        timeOutIds.productId = setTimeout(() => {
           document.querySelector(`.added-to-cart-${productId}`)
             .classList.remove('added')
         }, 2000)
-
+        console.log(timeOutIds)
   })
   
   })
