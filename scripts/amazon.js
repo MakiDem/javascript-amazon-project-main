@@ -1,5 +1,9 @@
+import {cart} from '../data/cart.js';
+
 productsDisplayLoop()
 
+
+let timeOutId;
 
 function productsDisplayLoop () {
   let productGridHTML = ''
@@ -45,7 +49,7 @@ function productsDisplayLoop () {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart-${product.id} added-to-cart">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -99,10 +103,26 @@ function productsDisplayLoop () {
 
       document.querySelector('.cart-quantity').innerText = cartQuantity
 
+      
+
+      document.querySelector(`.added-to-cart-${productId}`)
+        .classList.add('added');
+
+        if (timeOutId) {
+          clearTimeout(timeOutId)
+        }
+
+        timeOutId = setTimeout(() => {
+          document.querySelector(`.added-to-cart-${productId}`)
+            .classList.remove('added')
+        }, 2000)
+
   })
   
   })
 }
+
+
 
 
 
