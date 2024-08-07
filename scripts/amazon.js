@@ -1,7 +1,11 @@
-import {cart} from '../data/cart.js';
-import {products} from '../data/products.js'
+import {cart as initialCart} from '../data/cart.js';
+import {products} from '../data/products.js';
 
+
+let cart = JSON.parse(localStorage.getItem('cart')) || initialCart
+let cartQuantity = JSON.parse(localStorage.getItem('cartQuantity'))
 productsDisplayLoop()
+
 
 
 function productsDisplayLoop () {
@@ -92,6 +96,7 @@ function productsDisplayLoop () {
             .classList.remove('added')
         }, 2000)
         console.log(timeOutIds)
+        localStorage.setItem('cart', JSON.stringify(cart))
   })
   
   })
@@ -116,14 +121,17 @@ function matchInCart (productId, quantity, productName, matchingItem) {
 
 }
 
+  
 function updateCartQuantity () {
-  let cartQuantity = 0
-      cart.forEach(product => {
-        let cartNum = product.quantity
-        cartQuantity += cartNum
-      })
+   cartQuantity = 0
+    cart.forEach(product => {
+      let cartNum = Number(product.quantity)
+      cartQuantity += cartNum
+    })
   
   document.querySelector('.cart-quantity').innerText = cartQuantity
+  localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity))
+  
 }
 
 
