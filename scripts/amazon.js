@@ -1,14 +1,29 @@
-import {cart as initialCart} from '../data/cart.js';
-import {products} from '../data/products.js';
+import { cart as initialCart } from '../data/cart.js';
+import { products } from '../data/products.js';
 
+let cart = JSON.parse(localStorage.getItem('cart')) || initialCart || [];
+let cartQuantity = JSON.parse(localStorage.getItem('cartQuantity')) || 0;
 
-let cart = JSON.parse(localStorage.getItem('cart')) || initialCart
-let cartQuantity = JSON.parse(localStorage.getItem('cartQuantity'))
-productsDisplayLoop()
+document.addEventListener('DOMContentLoaded', () => {
+  const cartQuantityElement = document.querySelector('.cart-quantity');
+  if (cartQuantityElement) {
+    cartQuantityElement.innerHTML = cartQuantity;
+  }
+  productsDisplayLoop();
+  updateCartQuantity();
+});
 
 
 
 function productsDisplayLoop () {
+  let productGridElement = document.querySelector('.products-grid');
+  if (!productGridElement) {
+    console.error('No .products-grid element found in the DOM.');
+    return;
+  }
+
+
+
   let productGridHTML = ''
 
   products.forEach((product) => {
@@ -122,14 +137,25 @@ function matchInCart (productId, quantity, productName, matchingItem) {
 }
 
   
-function updateCartQuantity () {
+export function updateCartQuantity () {
+  localStorage.getItem('cartQuantity')
    cartQuantity = 0
     cart.forEach(product => {
       let cartNum = Number(product.quantity)
       cartQuantity += cartNum
     })
+
+    let amazonCartQuantity = document.querySelector('.cart-quantity')
+    let cartDOMQuantity = document.querySelector('.return-to-home-link')
   
-  document.querySelector('.cart-quantity').innerText = cartQuantity
+    if (amazonCartQuantity) {
+      amazonCartQuantity.innerHTML = cartQuantity
+    }
+
+    if (cartDOMQuantity) {
+      cartDOMQuantity.innerHTML = cartQuantity
+    }
+  
   localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity))
   
 }
