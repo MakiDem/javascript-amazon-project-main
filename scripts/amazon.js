@@ -138,7 +138,7 @@ function matchInCart (productId, quantity, productName, matchingItem) {
 
   
 export function updateCartQuantity () {
-  localStorage.getItem('cartQuantity')
+  
    cartQuantity = 0
     cart.forEach(product => {
       let cartNum = Number(product.quantity)
@@ -155,8 +155,9 @@ export function updateCartQuantity () {
     if (cartDOMQuantity) {
       cartDOMQuantity.innerHTML = cartQuantity
     }
+
+    console.log(cartQuantity)
   
-  localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity))
   
 }
 

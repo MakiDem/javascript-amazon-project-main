@@ -1,16 +1,16 @@
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-import {renderCartHTML} from '../scripts/checkout.js'
+import {updateCartQuantity} from '../scripts/amazon.js'
 
 export function deleteFromCart (productId) {
-  localStorage.getItem('cart')
-  let cartListHTML = ''
+
   cart.forEach((cartItem, i) => {
     if (cartItem.productId === productId) {
       cart.splice(i, 1)
+      updateCartQuantity()
     }
   });
-  
+ 
   localStorage.setItem('cart', JSON.stringify(cart));
   console.log('delete')
 }
