@@ -28,12 +28,6 @@ export function renderPaymentSummary() {
     document.querySelector('.item-total').innerHTML = `$${totalPrice.toFixed(2)}`
   })
 
- 
-
-  
-
-  
-
   // set total of shipping fee
   shippingFeeFunc()
 
