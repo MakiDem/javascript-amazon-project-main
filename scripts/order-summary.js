@@ -3,15 +3,13 @@ import {products} from '../data/products.js';
 import {deleteFromCart} from '../data/cart.js';
 import {updateCartQuantity} from './amazon.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-
-
-
-
-
+import { renderPaymentSummary } from './payment-summary.js';
+import { shippingFeeFunc } from './payment-summary.js'
 
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCartHTML()
+  renderPaymentSummary()
 });
 
 
@@ -150,11 +148,10 @@ export function renderCartHTML () {
         let productId = deleteLink.dataset.productId
         
         deleteFromCart(productId);
-        
-        
+  
         renderCartHTML();
         updateCartQuantity();
-        
+        renderPaymentSummary();
       });
     });
 
@@ -163,7 +160,6 @@ export function renderCartHTML () {
     document.querySelectorAll('.update-quantity-link').forEach(updateLink => {
       updateLink.addEventListener('click', (event) => {
         let parent = event.target.parentElement;
-        console.log(parent)
         let updateInput = parent.querySelector('.update-quantity-input');
         let saveLink = parent.querySelector('.save-quantity-link');
   
@@ -175,21 +171,24 @@ export function renderCartHTML () {
   
     document.querySelectorAll('.save-quantity-link').forEach(saveLink => {
       saveLink.addEventListener('click', (event) => {
+        console.log('saving value...')
         let productId = event.target.dataset.productId;
         let updateInput = event.target.previousElementSibling;
 
         if (!updateInput.value) {
           return;
         }
+        console.log("Updating quantity to:", updateInput.value);
+        updateCartItemQuantity(productId, updateInput.value);
+        renderCartHTML();
+        renderPaymentSummary()
   
-        updateCartItemQuantity(productId, cart, updateInput.value);
-  
-        renderCartHTML(); // Re-render the cart after saving the quantity
-        updateCartQuantity();
+        
       });
     });
     document.querySelectorAll('.delivery-option-input').forEach(deliveryOption => {
       deliveryOption.addEventListener('click', () => {
+        
         let productId = deliveryOption.name;  // Use the radio button's name attribute (productId)
         let deliveryPriceId = deliveryOption.dataset.deliveryPriceId;
     
@@ -203,21 +202,33 @@ export function renderCartHTML () {
         } else if (deliveryPriceId === '3') {
           deliveryDateDisplay.innerHTML = `Delivery date: ${delivery999Date}`;
         }
+
+        shippingFeeFunc()
+        
+       
       });
     });
 
+}
+  
+  
+function updateCartItemQuantity(productId, newQuantity) {
+  let cart = JSON.parse(localStorage.getItem('cart'))|| initialCart || [];
+  
+  // Find the cart item by product ID and update its quantity
+  cart = cart.map(cartItem => {
+    if (cartItem.productId === productId) {
+      return {...cartItem, quantity: parseInt(newQuantity)};
     }
+    return cartItem;
+  });
+
   
+  // Save the updated cart back to localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  updateCartQuantity();
+  renderPaymentSummary()
+
   
-  function updateCartItemQuantity(productId, cart, newQuantity) {
-    // Find the cart item by product ID and update its quantity
-    cart = cart.map(cartItem => {
-      if (cartItem.productId === productId) {
-        return {...cartItem, quantity: parseInt(newQuantity)};
-      }
-      return cartItem;
-    });
-  
-    // Save the updated cart back to localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }
+}

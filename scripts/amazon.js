@@ -97,7 +97,7 @@ function productsDisplayLoop () {
       let matchingItem;
 
       matchInCart(productId, quantity, productName, matchingItem);
-      updateCartQuantity();
+      
 
       document.querySelector(`.added-to-cart-${productId}`)
         .classList.add('added');
@@ -112,6 +112,9 @@ function productsDisplayLoop () {
         }, 2000)
         console.log(timeOutIds)
         localStorage.setItem('cart', JSON.stringify(cart))
+
+        updateCartQuantity();
+        renderPaymentSummary()
   })
   
   })
@@ -140,6 +143,7 @@ function matchInCart (productId, quantity, productName, matchingItem) {
 export function updateCartQuantity () {
   
    cartQuantity = 0
+   let cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart.forEach(product => {
       let cartNum = Number(product.quantity)
       cartQuantity += cartNum
@@ -155,8 +159,6 @@ export function updateCartQuantity () {
     if (cartDOMQuantity) {
       cartDOMQuantity.innerHTML = cartQuantity
     }
-
-    console.log(cartQuantity)
   
   
 }

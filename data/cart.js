@@ -1,8 +1,10 @@
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
+import {renderPaymentSummary} from '../scripts/payment-summary.js'
 
 import {updateCartQuantity} from '../scripts/amazon.js'
 
 export function deleteFromCart (productId) {
+  
 
   cart.forEach((cartItem, i) => {
     if (cartItem.productId === productId) {
@@ -12,5 +14,7 @@ export function deleteFromCart (productId) {
   });
  
   localStorage.setItem('cart', JSON.stringify(cart));
+  renderPaymentSummary()
+
   console.log('delete')
 }
