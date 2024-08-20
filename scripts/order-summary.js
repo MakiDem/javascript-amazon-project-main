@@ -25,8 +25,7 @@ export function renderCartHTML () {
     return;}
 
     let today = dayjs();
-    console.log(today)
-
+   
     let deliveryDate = today.add(7, 'days')
     let deliveryDateHTML = deliveryDate.format('dddd, MMMM D')
 
