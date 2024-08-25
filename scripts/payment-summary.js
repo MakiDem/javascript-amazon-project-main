@@ -2,8 +2,8 @@ import { cart as initialCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { deliveryOptions } from '../data/deliveryOptions.js';
 
-let cart = JSON.parse(localStorage.getItem('cart')) || initialCart ||[];
-console.log(cart)
+
+
 export function renderPaymentSummary() {
   // set item quantities
   let cartQuantity = 0
