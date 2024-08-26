@@ -67,6 +67,7 @@ function productsDisplayLoop () {
           </div>
 
           <div class="product-spacer"></div>
+          ${product.getSizeChart()}
 
           <div class="added-to-cart-${product.id} added-to-cart">
             <img src="images/icons/checkmark.png">
