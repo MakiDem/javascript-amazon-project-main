@@ -1,7 +1,8 @@
 import { cart as initialCart } from '../data/cart.js';
-import { products } from '../data/products.js';
+import { products, loadProducts } from '../data/products.js';
 import { deliveryOptions } from '../data/deliveryOptions.js';
 
+loadProducts();
 
 
 export function renderPaymentSummary() {

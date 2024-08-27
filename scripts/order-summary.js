@@ -1,5 +1,5 @@
 import {cart as initialCart} from '../data/cart.js';
-import {products} from '../data/products.js';
+import {products, loadProducts} from '../data/products.js';
 import {deleteFromCart} from '../data/cart.js';
 import {updateCartQuantity} from './amazon.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
@@ -10,6 +10,7 @@ import { shippingFeeFunc } from './payment-summary.js'
 document.addEventListener('DOMContentLoaded', () => {
   renderCartHTML()
   renderPaymentSummary()
+  loadProducts();
 });
 
 

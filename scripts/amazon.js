@@ -1,5 +1,5 @@
 import { cart as initialCart } from '../data/cart.js';
-import { products } from '../data/products.js';
+import { products, loadProducts } from '../data/products.js';
 
 let cart = JSON.parse(localStorage.getItem('cart')) || initialCart || [];
 let cartQuantity = JSON.parse(localStorage.getItem('cartQuantity')) || 0;
@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   productsDisplayLoop();
   updateCartQuantity();
+  loadProducts();
 });
 
 
