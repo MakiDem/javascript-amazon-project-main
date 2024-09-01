@@ -8,13 +8,19 @@ import { shippingFeeFunc } from './payment-summary.js'
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderCartHTML()
-  renderPaymentSummary()
-  loadProducts();
+  renderCartPage().then(() => {
+    renderPaymentSummary()
+  })
 });
 
+async function renderCartPage() {
+  await loadProducts();
+  await updateCartQuantity();
+  await renderCartHTML();
+}
 
-export function renderCartHTML () {
+
+export async function renderCartHTML () {
 
 
   let cart = JSON.parse(localStorage.getItem('cart')) || initialCart || [];

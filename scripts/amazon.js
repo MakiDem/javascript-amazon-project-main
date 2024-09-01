@@ -9,10 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cartQuantityElement) {
     cartQuantityElement.innerHTML = cartQuantity;
   }
-  productsDisplayLoop();
-  updateCartQuantity();
-  loadProducts();
+  renderHomePage().then(() => productsDisplayLoop());
 });
+
+async function renderHomePage () {
+  await loadProducts()
+  await updateCartQuantity()
+}
 
 
 
@@ -142,7 +145,7 @@ function matchInCart (productId, quantity, productName, matchingItem) {
 }
 
   
-export function updateCartQuantity () {
+export async function updateCartQuantity () {
   
    cartQuantity = 0
    let cart = JSON.parse(localStorage.getItem('cart')) || [];

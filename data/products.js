@@ -37,25 +37,34 @@ class Clothing extends Product {
   }
 }
 
-export let products = []
 
-export function loadProducts () {
-  let xhr = new XMLHttpRequest();
 
-  xhr.addEventListener('load', () => {
-    products = JSON.parse(xhr.response).map (product => {
-      if (product.type === 'clothing') {
-        return new Clothing(product)
-      } else {
-        return new Product(product)
-      }
-        
-    });
-    
-  })
-  xhr.open('GET', 'https://supersimplebackend.dev/products', false);
-  xhr.send()
+export let products = fetch('https://supersimplebackend.dev/products').then((data) => {
+  data.json()
+})
+
+
+
+export async function loadProducts () {
+  let productsData = await fetchProducts()
+  products = productsData.map (product => {
+    if (product.type === 'clothing') {
+      return new Clothing(product)
+    } else {
+      return new Product(product)
+    }
+      
+  });
+
+  console.log(products)
+  return products
   
+}
+
+async function fetchProducts () {
+  let products = await fetch('https://supersimplebackend.dev/products')
+  const data = await products.json()
+  return data
 }
 
 
