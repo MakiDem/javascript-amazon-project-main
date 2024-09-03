@@ -260,7 +260,8 @@ document.querySelector('.place-order-button').addEventListener('click', async ()
 
   const order = await orderRequest.json()
   console.log(order)
-  new OrderPage.addOrder(order)
+  let orderPage = new OrderPage
+  orderPage.addOrder(order)
 
   window.location.href = 'orders.html'
 })

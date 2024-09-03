@@ -92,8 +92,7 @@ export class OrderPage {
               Track package
             </button>
           </a>
-        </div>
-      </div>`
+        </div>`
     })
 
     return orderList
