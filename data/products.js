@@ -61,7 +61,7 @@ export async function loadProducts () {
   
 }
 
-async function fetchProducts () {
+export async function fetchProducts () {
   let products = await fetch('https://supersimplebackend.dev/products')
   const data = await products.json()
   return data

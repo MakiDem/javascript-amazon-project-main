@@ -5,7 +5,7 @@ import {updateCartQuantity} from './amazon.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { renderPaymentSummary } from './payment-summary.js';
 import { shippingFeeFunc } from './payment-summary.js'
-import { addOrder } from './order.js';
+import { OrderPage } from './order.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -243,6 +243,10 @@ function updateCartItemQuantity(productId, newQuantity) {
 document.querySelector('.place-order-button').addEventListener('click', async () => {
   console.log('placing order...')
   let cart = JSON.parse(localStorage.getItem('cart'))|| initialCart || [];
+  if (!cart.length) {
+    return
+  }
+
   console.log(cart)
   const orderRequest = await fetch('https://supersimplebackend.dev/orders', {
     method: 'POST', 
@@ -256,7 +260,7 @@ document.querySelector('.place-order-button').addEventListener('click', async ()
 
   const order = await orderRequest.json()
   console.log(order)
-  addOrder(order)
+  new OrderPage.addOrder(order)
 
   window.location.href = 'orders.html'
 })
