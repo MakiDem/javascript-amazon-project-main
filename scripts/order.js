@@ -55,8 +55,10 @@ export class OrderPage {
   
   
     })
-  
-    document.querySelector('.orders-grid').innerHTML = orderListHTML
+    if (document.querySelector('.orders-grid')) {
+      document.querySelector('.orders-grid').innerHTML = orderListHTML
+    }
+    
   }
 
   renderOrderedProducts (order, products) {

@@ -8,16 +8,18 @@ import { shippingFeeFunc } from './payment-summary.js'
 import { OrderPage } from './order.js';
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderCartPage().then(() => {
-    renderPaymentSummary()
-  })
+document.addEventListener('DOMContentLoaded', async () => {
+  await renderCartPage();
+  renderPaymentSummary();
 });
 
 async function renderCartPage() {
-  await loadProducts();
-  await updateCartQuantity();
-  await renderCartHTML();
+  await Promise.all([
+    loadProducts(),
+    updateCartQuantity(),
+  ])
+
+  renderCartHTML()
 }
 
 

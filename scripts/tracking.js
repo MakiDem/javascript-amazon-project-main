@@ -3,7 +3,7 @@ import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { fetchProducts } from "../data/products.js";
 
 
-async function renderTrackingPage (products) {
+async function renderTrackProduct (products) {
   let url = new URL(window.location.href);
   let orderId = url.searchParams.get('orderId');
   let productId = url.searchParams.get('productId');
@@ -60,14 +60,10 @@ async function renderTrackingPage (products) {
       </div>`
 }
 
-new Promise((resolve, reject) => {
-  try {
-    fetchProducts().then((products) => resolve(products))
-  } catch (error) {
-    reject(error)
-  }
-}).then((products) => {
-  renderTrackingPage(products)
-})
+async function renderTrackingPage () {
+  let products =await fetchProducts()
+  renderTrackProduct(products)
+}
 
+renderTrackingPage()
 
