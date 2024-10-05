@@ -61,7 +61,7 @@ async function renderTrackProduct (products) {
 }
 
 async function renderTrackingPage () {
-  let products =await fetchProducts()
+  let products = await fetchProducts()
   renderTrackProduct(products)
 }
 

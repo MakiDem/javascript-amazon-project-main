@@ -243,13 +243,13 @@ function updateCartItemQuantity(productId, newQuantity) {
 }
 
 document.querySelector('.place-order-button').addEventListener('click', async () => {
-  console.log('placing order...')
+  
   let cart = JSON.parse(localStorage.getItem('cart'))|| initialCart || [];
   if (!cart.length) {
     return
   }
 
-  console.log(cart)
+  
   const orderRequest = await fetch('https://supersimplebackend.dev/orders', {
     method: 'POST', 
     headers: {
@@ -261,7 +261,6 @@ document.querySelector('.place-order-button').addEventListener('click', async ()
   })
 
   const order = await orderRequest.json()
-  console.log(order)
   let orderPage = new OrderPage
   orderPage.addOrder(order)
 
